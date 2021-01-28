@@ -87,10 +87,10 @@ ALPHA = (0, 0, 0)
 ball = ball(screen_width/2-15,screen_height/2-15,30,30,7)
 player = player(10,screen_height/2,10,70)
 opponent = py.Rect(screen_width-20,screen_height/2,10,70)
-score = score(screen_width/2 + 100,10)
+score_opponent = score(screen_width/2 ,10)
 score_list = py.sprite.Group()
-score_list.add(score)
-score_number = 0
+score_list.add(score_opponent)
+score_number_opponent = 0
 screenshake = 0
 
 bg_color = py.Color('grey12')
@@ -126,8 +126,8 @@ while True:
 
     #logic
     if ball.rect.x <= 0:
-        score_number += 1
-        score.update(score_number)
+        score_number_opponent += 1
+        score_opponent.update(score_number_opponent)
 
         screenshake = 30
     if ball.rect.y >= screen_width:
