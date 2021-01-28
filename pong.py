@@ -147,8 +147,6 @@ while True:
         ball.rect.x = screen_width/2 - 15
         ball.rect.y = screen_height/2 - 15
 
-
-
     if screenshake > 0:
         screenshake -= 1
 
