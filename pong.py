@@ -79,6 +79,22 @@ class score(py.sprite.Sprite):
             if(i == score):
                 self.image = self.images[i]
 
+class opponent(py.sprite.Sprite):
+    def __init__(self,speed):
+        py.sprite.Sprite.__init__(self)
+        self.speed = speed
+        self.rect = py.Rect(screen_width-20,screen_height,10,80)
+
+    def update(self):
+        if self.rect.centery < ball.rect.y:
+            self.rect.top += self.speed
+        if self.rect.centery > ball.rect.y:
+            self.rect.top -= self.speed
+        if self.rect.top <= 0:
+            self.rect.top = 0
+        if self.rect.bottom >= screen_width:
+            self.rect.bottom = screen_height
+
 #colors
 WHITE = (255,255,255)
 ALPHA = (0, 0, 0)
@@ -86,7 +102,7 @@ ALPHA = (0, 0, 0)
 #objects
 ball = ball(screen_width/2-15,screen_height/2-15,30,30,7)
 player = player(10,screen_height/2,10,70)
-opponent = py.Rect(screen_width-20,screen_height,10,70)
+opponent = opponent(6)
 score_opponent = score(screen_width/2 ,10)
 score_player = score(screen_width/2 - 100 ,10)
 score_list = py.sprite.Group()
@@ -122,11 +138,10 @@ while True:
 
     ball.ball_update()
     player.player_update()
-
-    if(ball.rect.x > screen_width/2):
-        opponent.y = ball.rect.y
+    opponent.update()
 
     #logic
+
     if ball.rect.x <= 0:
         score_number_opponent += 1
         score_opponent.update(score_number_opponent)
@@ -134,9 +149,9 @@ while True:
         screenshake = 30
 
 
-        ball.rect.x = screen_width/2 - 15
-        ball.rect.y = screen_height/2 - 15
-
+        ball.rect.center = (screen_width/2,screen_height/2)
+        ball.ball_speed_x *= random.choice((-1,1))
+        ball.ball_speed_y *= random.choice((-1,1))
 
     if ball.rect.right >= screen_width :
         score_number_player += 1
@@ -144,8 +159,9 @@ while True:
         score_list.draw(screen)
         screenshake = 30
 
-        ball.rect.x = screen_width/2 - 15
-        ball.rect.y = screen_height/2 - 15
+        ball.rect.center = (screen_width/2,screen_height/2)
+        ball.ball_speed_x *= random.choice((-1,1))
+        ball.ball_speed_y *= random.choice((-1,1))
 
     if screenshake > 0:
         screenshake -= 1
