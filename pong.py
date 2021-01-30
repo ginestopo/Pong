@@ -158,7 +158,7 @@ while True:
         ball.rect.y = screen_height/2
 
     if ball.rect.x <= 0:
-        score_number_opponent += 6
+        score_number_opponent += 1
         score_opponent.update(score_number_opponent)
         score_list.draw(screen)
         screenshake = 30
