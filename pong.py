@@ -115,6 +115,8 @@ screenshake = 0
 bg_color = py.Color('grey12')
 light_grey = (200,200,200)
 
+reset = False
+
 
 
 while True:
@@ -128,11 +130,14 @@ while True:
                 player.player_move(7)
             if event.key == py.K_UP:
                 player.player_move(-7)
+            if event.key == py.K_SPACE:
+                reset = True
         if event.type == py.KEYUP:
             if event.key == py.K_DOWN:
                 player.player_move(-7)
             if event.key == py.K_UP:
                 player.player_move(7)
+
 
     screen.fill(bg_color)
 
@@ -141,9 +146,19 @@ while True:
     opponent.update()
 
     #logic
+    if reset == True:
+        score_opponent.update(0)
+        score_player.update(0)
+        score_number_player = 0
+        score_number_opponent = 0
+        reset = False
+        player.y = screen_height/2
+        opponent.y = screen_height/2
+        ball.rect.x = screen_width/2
+        ball.rect.y = screen_height/2
 
     if ball.rect.x <= 0:
-        score_number_opponent += 1
+        score_number_opponent += 6
         score_opponent.update(score_number_opponent)
         score_list.draw(screen)
         screenshake = 30
@@ -163,6 +178,7 @@ while True:
         ball.ball_speed_x *= random.choice((-1,1))
         ball.ball_speed_y *= random.choice((-1,1))
 
+
     if screenshake > 0:
         screenshake -= 1
 
@@ -178,6 +194,10 @@ while True:
     py.draw.aaline(screen,light_grey,(screen_width/2,0),(screen_width/2,screen_height))
     py.draw.circle(screen,light_grey,(int(screen_width/2),int(screen_height/2)),4)
     score_list.draw(screen)
+
+    if (score_number_player>9 or score_number_opponent>9) and (reset == False):
+        screen.fill(bg_color)
+
 
     #update the window
     screen.blit(screen, render_offset)
