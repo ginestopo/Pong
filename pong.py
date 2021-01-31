@@ -152,7 +152,7 @@ while True:
         score_number_player = 0
         score_number_opponent = 0
         reset = False
-        player.y = screen_height/2
+        player.rect.y = screen_height/2
         opponent.y = screen_height/2
         ball.rect.x = screen_width/2
         ball.rect.y = screen_height/2
